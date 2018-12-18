@@ -44,15 +44,15 @@ open class LFSideViewController: UIViewController {
     open weak var leftViewController: UIViewController? {
         willSet {
             if let leftViewController = self.leftViewController {
-                leftViewController.removeFromParentViewController()
+                leftViewController.removeFromParent()
                 leftViewController.view.removeFromSuperview()
             }
         }
         
         didSet {
             if let leftViewController = self.leftViewController {
-                self.addChildViewController(leftViewController)
-                leftViewController.didMove(toParentViewController: self)
+                self.addChild(leftViewController)
+                leftViewController.didMove(toParent: self)
                 leftViewController.view.isHidden = true
                 self.contentView!.insertSubview(leftViewController.view, at: 0)
             }
@@ -62,15 +62,15 @@ open class LFSideViewController: UIViewController {
     open weak var rightViewController: UIViewController? {
         willSet {
             if let rightViewController = self.rightViewController {
-                rightViewController.removeFromParentViewController()
+                rightViewController.removeFromParent()
                 rightViewController.view.removeFromSuperview()
             }
         }
         
         didSet {
             if let rightViewController = self.rightViewController {
-                self.addChildViewController(rightViewController)
-                rightViewController.didMove(toParentViewController: self)
+                self.addChild(rightViewController)
+                rightViewController.didMove(toParent: self)
                 rightViewController.view.isHidden = true
                 self.contentView!.insertSubview(rightViewController.view, at: 0)
             }
@@ -80,15 +80,15 @@ open class LFSideViewController: UIViewController {
     open weak var contentViewController: UIViewController? {
         willSet {
             if let contentViewController = self.contentViewController {
-                contentViewController.removeFromParentViewController()
+                contentViewController.removeFromParent()
                 contentViewController.view.removeFromSuperview()
             }
         }
         
         didSet {
             if let contentViewController = self.contentViewController {
-                self.addChildViewController(contentViewController)
-                contentViewController.didMove(toParentViewController: self)
+                self.addChild(contentViewController)
+                contentViewController.didMove(toParent: self)
                 self.contentView!.addSubview(contentViewController.view)
             }
         }
@@ -147,7 +147,7 @@ open class LFSideViewController: UIViewController {
         self.hideRightViewController(self.animationDuration, dampingRatio: 1.0, velocity: 0.0, options: .curveEaseOut)
     }
     
-    open func presentLeftViewController(_ duration: TimeInterval, dampingRatio: CGFloat, velocity: CGFloat, options: UIViewAnimationOptions) {
+    open func presentLeftViewController(_ duration: TimeInterval, dampingRatio: CGFloat, velocity: CGFloat, options: UIView.AnimationOptions) {
         self.delegate?.willPresentViewController?(self.leftViewController)
         self.leftViewController?.view.isHidden = false
         self.leftViewControllerVisible = true
@@ -164,7 +164,7 @@ open class LFSideViewController: UIViewController {
         })
     }
     
-    open func presentRightViewController(_ duration: TimeInterval, dampingRatio: CGFloat, velocity: CGFloat, options: UIViewAnimationOptions) {
+    open func presentRightViewController(_ duration: TimeInterval, dampingRatio: CGFloat, velocity: CGFloat, options: UIView.AnimationOptions) {
         self.delegate?.willPresentViewController?(self.rightViewController)
         self.rightViewController?.view.isHidden = false
         self.rightViewControllerVisible = true
@@ -181,19 +181,19 @@ open class LFSideViewController: UIViewController {
         })
     }
     
-    open func hideLeftViewController(_ duration: TimeInterval, dampingRatio: CGFloat, velocity: CGFloat, options: UIViewAnimationOptions) {
+    open func hideLeftViewController(_ duration: TimeInterval, dampingRatio: CGFloat, velocity: CGFloat, options: UIView.AnimationOptions) {
         self.delegate?.willHideViewController?(self.leftViewController)
         self.leftViewControllerVisible = false
         self.hideMenuViewController(duration, dampingRatio: dampingRatio, velocity: velocity, options: options, viewController: self.leftViewController)
     }
     
-    open func hideRightViewController(_ duration: TimeInterval, dampingRatio: CGFloat, velocity: CGFloat, options: UIViewAnimationOptions) {
+    open func hideRightViewController(_ duration: TimeInterval, dampingRatio: CGFloat, velocity: CGFloat, options: UIView.AnimationOptions) {
         self.delegate?.willHideViewController?(self.rightViewController)
         self.rightViewControllerVisible = false
         self.hideMenuViewController(duration, dampingRatio: dampingRatio, velocity: velocity, options: options, viewController: self.rightViewController)
     }
     
-    fileprivate func hideMenuViewController(_ duration: TimeInterval, dampingRatio: CGFloat, velocity: CGFloat, options: UIViewAnimationOptions, viewController: UIViewController?) {
+    fileprivate func hideMenuViewController(_ duration: TimeInterval, dampingRatio: CGFloat, velocity: CGFloat, options: UIView.AnimationOptions, viewController: UIViewController?) {
         UIView.animate(withDuration: duration,
             delay: 0.0,
             usingSpringWithDamping: dampingRatio,
